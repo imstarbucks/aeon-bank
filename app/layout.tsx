@@ -1,21 +1,23 @@
-import type { Metadata } from 'next';
-import { Geist, Geist_Mono } from 'next/font/google';
-import './globals.css';
+import type { Metadata } from "next";
+import { Geist, Geist_Mono } from "next/font/google";
+import "./globals.css";
+import { Nav } from "@/components/ui/nav";
+import { QCProvider } from "@/components/queryClient";
 
 const geistSans = Geist({
-  variable: '--font-geist-sans',
-  subsets: ['latin'],
+  variable: "--font-geist-sans",
+  subsets: ["latin"],
 });
 
 const geistMono = Geist_Mono({
-  variable: '--font-geist-mono',
-  subsets: ['latin'],
+  variable: "--font-geist-mono",
+  subsets: ["latin"],
 });
 
 export const metadata: Metadata = {
-  title: 'Aeon Bank',
+  title: "AEON Bank | Malaysia’s FIRST Islamic Digital Bank!",
   description:
-    'Aeon Bank is a Islamic banking platform that provides a secure and transparent environment for users to manage their finances.',
+    "Simple, Safe and Shariah-Compliant. We are licensed and regulated to operate as a digital bank by Bank Negara Malaysia (BNM).",
 };
 
 export default function RootLayout({
@@ -26,9 +28,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} bg-slate-200 antialiased`}
       >
-        {children}
+        <QCProvider>{children}</QCProvider>
       </body>
     </html>
   );
