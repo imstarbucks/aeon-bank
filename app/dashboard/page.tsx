@@ -9,8 +9,8 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { TransactionHistoryType } from "@/lib/types";
 import LogoutButton from "@/components/login/logout-btn";
+import { TransactionHistoryType } from "@/lib/types";
 
 const DashboardPage = async () => {
   const cookiesStore = await cookies();
