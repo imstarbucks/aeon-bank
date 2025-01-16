@@ -10,13 +10,16 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { TransactionHistoryType } from "@/lib/types";
-import { Button } from "@/components/ui/button";
 import LogoutButton from "@/components/login/logout-btn";
 
 const DashboardPage = async () => {
   const cookiesStore = await cookies();
   const username = cookiesStore.get("username");
   const login = cookiesStore.get("login");
+
+  if (!login || login.value !== "true") {
+    return redirect("/login");
+  }
 
   const fetchTransactionHistory = await fetch(
     `${process.env.NEXT_PUBLIC_API_URL}/api/transaction-history`,
@@ -26,11 +29,6 @@ const DashboardPage = async () => {
   if (!fetchTransactionHistory.ok) {
     throw new Error("Error fetching transaction history");
   }
-
-  if (!login || login.value !== "true") {
-    return redirect("/login");
-  }
-
   const res = await fetchTransactionHistory.json();
   const tableData: TransactionHistoryType[] = res.data || [];
 
@@ -50,10 +48,16 @@ const DashboardPage = async () => {
             <TableHead className="text-right">Amount</TableHead>
           </TableRow>
         </TableHeader>
-        <TableBody>
+        <TableBody className="bg-slate-100">
           {tableData.map((transaction) => (
             <TableRow key={transaction.id}>
-              <TableCell className="font-medium">{transaction.date}</TableCell>
+              <TableCell className="font-medium">
+                {new Date(transaction.date).toLocaleDateString("en-GB", {
+                  day: "numeric",
+                  month: "short",
+                  year: "numeric",
+                })}
+              </TableCell>
               <TableCell>{transaction.referenceId}</TableCell>
               <TableCell className="flex flex-col">
                 <div className="">{transaction.to}</div>
@@ -66,7 +70,7 @@ const DashboardPage = async () => {
               </TableCell>
               <TableCell className="text-right">
                 RM{" "}
-                {transaction.amount.toLocaleString("en-US", {
+                {transaction.amount.toLocaleString("en-GB", {
                   maximumFractionDigits: 2,
                   minimumFractionDigits: 2,
                 })}

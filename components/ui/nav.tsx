@@ -7,7 +7,6 @@ import {
   Bars3Icon,
   XMarkIcon,
 } from "@heroicons/react/24/outline";
-import { cn } from "@/lib/utils";
 import { useWindowSize } from "@/hooks/useWindowSize";
 
 const links = [
